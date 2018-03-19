@@ -1,1 +1,5 @@
 E:\The British College\C#\HW\Fractal\Fractal\bin\Debug\Fractal.exe.config
+E:\The British College\C#\HW\Fractal\Fractal\obj\Debug\Fractal.csprojResolveAssemblyReference.cache
+E:\The British College\C#\HW\Fractal\Fractal\obj\Debug\Fractal.Form1.resources
+E:\The British College\C#\HW\Fractal\Fractal\obj\Debug\Fractal.Properties.Resources.resources
+E:\The British College\C#\HW\Fractal\Fractal\obj\Debug\Fractal.csproj.GenerateResource.Cache
