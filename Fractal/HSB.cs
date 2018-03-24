@@ -1,6 +1,9 @@
-﻿namespace Fractal
+﻿using System;
+
+
+namespace Fractal
 {
-    internal class HSB
+    class HSB
     {
         public float rChan, gChan, bChan;
         public HSB()
@@ -69,6 +72,10 @@
                     blue = 0;
                 }
             }
-            }
+
+            rChan = (float)Math.Round(Math.Min(Math.Max(red, 0f), 255));
+            gChan = (float)Math.Round(Math.Min(Math.Max(green, 0), 255));
+            bChan = (float)Math.Round(Math.Min(Math.Max(blue, 0), 255));
+        }
     }
 }
