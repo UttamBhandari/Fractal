@@ -1,17 +1,26 @@
 ﻿using System;
-
+using System.Drawing;
 
 namespace Fractal
 {
     class HSB
     {
         public float rChan, gChan, bChan;
+        public int r, g, a;
+
+        //private int mandelColor;
+        //private int unit;
+
+
         public HSB()
         {
             rChan = gChan = bChan = 0;
         }
-        public void fromHSB(float h, float s, float b)
+        public void fromHSB(float h, float s, float b, int c ,int r,int g, int a)
         {
+            this.r = r;
+            this.g = g;
+            this.a = a;
             float red = b;
             float green = b;
             float blue = b;
@@ -72,10 +81,83 @@ namespace Fractal
                     blue = 0;
                 }
             }
-
-            rChan = (float)Math.Round(Math.Min(Math.Max(red, 0f), 255));
-            gChan = (float)Math.Round(Math.Min(Math.Max(green, 0), 255));
-            bChan = (float)Math.Round(Math.Min(Math.Max(blue, 0), 255));
+            
+            
+                rChan = (float)Math.Round(Math.Min(Math.Max(red, 0f), 255));
+                gChan = (float)Math.Round(Math.Min(Math.Max(green, 0), 255));
+                bChan = (float)Math.Round(Math.Min(Math.Max(blue, 0), 255));
+            
+          
         }
+        /*int r = 255;
+        int g = 0;
+        int b = 0;
+
+
+        private void nextRGB()
+        {
+            if (((r == 255)
+                        && ((g < 255)
+                        && (b == 0))))
+            {
+                g++;
+            }
+
+            if (((g == 255)
+                        && ((r > 0)
+                        && (b == 0))))
+            {
+                r--;
+            }
+
+            if (((g == 255)
+                        && ((b < 255)
+                        && (r == 0))))
+            {
+                b++;
+            }
+
+            if (((b == 255)
+                        && ((g > 0)
+                        && (r == 0))))
+            {
+                g--;
+            }
+
+            if (((b == 255)
+                        && ((r < 255)
+                        && (g == 0))))
+            {
+                r++;
+            }
+
+            if (((r == 255)
+                        && ((b > 0)
+                        && (g == 0))))
+            {
+                b--;
+            }
+
+        }
+
+        public Color nextColor()
+        {
+            nextRGB();
+            return makeColor();
+        }
+
+        private Color makeColor()
+        {
+            return new Color(r, g, b);
+        } */
+        /**
+        private float UInt8(double v)
+        {
+            throw new NotImplementedException();
+        }
+
+      
+        
+    **/
+       
     }
-}

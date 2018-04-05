@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Printing;
+using System.IO;
 
 namespace Fractal
 {
@@ -28,14 +29,24 @@ namespace Fractal
         private Cursor c1, c2;
         private HSB HSBcol = new HSB();
         private Pen pen;  
-        private bool boxclicked;
+        private bool boxclicked, RunFirst;
+        private int value, r, g, a;
+
 
         public Form1()
         {
             InitializeComponent();
+
+            //SX = Convert.ToDouble(readState()[0]);
+            //SY = Convert.ToDouble(readState()[1]);
+            //EX = Convert.ToDouble(readState()[2]);
+            //EY = Convert.ToDouble(readState()[3]);
+
             init();
+
             start();
-            pictureBox1.Cursor = Cursors.Cross;
+           // pictureBox1.Cursor = Cursors.Cross;
+            
         }
         public void init()  //all instances will be prepared
         {
@@ -48,6 +59,7 @@ namespace Fractal
             image = new Bitmap(x1, y1);
             g1 = Graphics.FromImage(image);
             finished = true;
+            RunFirst = true;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,6 +77,8 @@ namespace Fractal
             DialogResult res = MessageBox.Show("Are you sure you want to Restart ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (res == DialogResult.OK)
             {
+                 
+                saveState(-2.025, -1.125, 0.6, 1.125);
                 Application.Restart();
             }
             if (res == DialogResult.Cancel)
@@ -75,7 +89,16 @@ namespace Fractal
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Refresh();
+            start();
+            mandelbrot();
+            rectangle = false;
+            update();
+            StreamWriter writefile = new StreamWriter("uttamsave.txt");
+            writefile.Write("-2.025" + Environment.NewLine);
+            writefile.Write("-1.125" + Environment.NewLine);
+            writefile.Write("0.6" + Environment.NewLine);
+            writefile.Write("1.125" + Environment.NewLine);
+            writefile.Close();
         }
 
         private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -90,7 +113,14 @@ namespace Fractal
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            stop();
+            pictureBox1.Dispose();
+        }
+
+        private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           // object Clone;
+            Form1 newform = new Form1();
+            newform.Show();
         }
 
         public void destroy()//delete all instances
@@ -103,6 +133,15 @@ namespace Fractal
                 //System.gc();   garbage collection
             }
         }
+
+        private void colorPaletteToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            RandomColor();
+            value = 1;
+            mandelbrot();
+            update();
+        }
+
         public void start()
         {
             action = false;
@@ -112,14 +151,34 @@ namespace Fractal
             yzoom = (yende - ystart) / (double)y1;
             mandelbrot();
         }
-        
+
+        private void Form1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        {
+            
+        }
+
         public void stop()
         {
 
         }
+        private void RandomColor()
+        {
+            Random random = new Random();
+            r = random.Next(255);
+            g = random.Next(255);
+            a = random.Next(255);
+        }
+
+
 
         public void update()
         {
+            saveState(xstart, ystart, xende, yende);
             Graphics g = pictureBox1.CreateGraphics();
             g.DrawImage(image, 0, 0);
             if(rectangle)
@@ -168,7 +227,7 @@ namespace Fractal
                        
                         b = 1.0f - h * h; // brightnes
                                           //djm added
-                         HSBcol.fromHSB(h * 255, 0.8f * 255, b * 255);
+                         HSBcol.fromHSB(h * 255, 0.8f * 255, b * 255,value,r,g,a);
 
                         Color col = Color.FromArgb((int)HSBcol.rChan, (int)HSBcol.gChan, (int)HSBcol.bChan);//g1.setColor(col);
                         pen = new Pen(col);
@@ -196,12 +255,35 @@ namespace Fractal
             }
             return (float)j / (float)MAX;
         }
+
         private void initvalues() //reset start value
         {
-            xstart = SX;
-            ystart = SY;
-            xende = EX;
-            yende = EY;
+            if (RunFirst == true)
+            {
+                List<string> co = new List<string>();
+
+                using (StreamReader strRdr = File.OpenText("state.txt"))
+                {
+                    string s = "";
+                    while ((s = strRdr.ReadLine()) != null)
+                    {
+                        co.Add(s);
+                    }
+                }
+                    xstart = Convert.ToDouble(readState()[0]);
+                ystart = Convert.ToDouble(readState()[1]);
+                xende = Convert.ToDouble(readState()[2]);
+                yende = Convert.ToDouble(readState()[3]);
+                RunFirst = false;
+                value = 1;
+                
+            }
+            else {
+                xstart = SX;
+                ystart = SY;
+                xende = EX;
+                yende = EY;
+            }
             if ((float)((xende - xstart) / (yende - ystart)) != xy)
                 xstart = xende - (yende - ystart) * (double)xy;
         }
@@ -285,6 +367,41 @@ namespace Fractal
         {
             return "fractal.class - Mandelbrot Set a Java Applet by Eckhard Roessel 2000-2001";
         }
+
+
+        private List<string> readState()
+        {
+            string path = Directory.GetCurrentDirectory() + "\\state.txt";
+
+            List<string> l = new List<string>();
+
+            using (StreamReader sr = File.OpenText(path))
+            {
+                string s = "";
+                while ((s = sr.ReadLine()) != null)
+                {
+                    l.Add(s);
+                }
+            }
+
+            return l;
+        }
+
+        private void saveState(double xstart, double ystart, double xend, double yend)
+        {
+            string path = Directory.GetCurrentDirectory() + "\\state.txt";
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                sw.WriteLine(xstart);
+                sw.WriteLine(ystart);
+                sw.WriteLine(xend);
+                sw.WriteLine(yend);
+            }
+
+        }
+
     }
+
     
+
 }
