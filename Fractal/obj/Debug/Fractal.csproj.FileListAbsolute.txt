@@ -7,3 +7,6 @@ E:\The British College\C#\HW\Fractal\Fractal\bin\Debug\Fractal.exe
 E:\The British College\C#\HW\Fractal\Fractal\bin\Debug\Fractal.pdb
 E:\The British College\C#\HW\Fractal\Fractal\obj\Debug\Fractal.exe
 E:\The British College\C#\HW\Fractal\Fractal\obj\Debug\Fractal.pdb
+E:\The British College\C#\HW\77193498_Uttam_Bhandari_ASE\Fractal\Fractal\bin\Debug\Fractal.exe.config
+E:\The British College\C#\HW\77193498_Uttam_Bhandari_ASE\Fractal\Fractal\obj\Debug\Fractal.exe
+E:\The British College\C#\HW\77193498_Uttam_Bhandari_ASE\Fractal\Fractal\obj\Debug\Fractal.pdb

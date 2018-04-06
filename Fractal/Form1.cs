@@ -63,18 +63,23 @@ namespace Fractal
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            DialogResult close = MessageBox.Show("Do you sure want to exit?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (close == DialogResult.OK)
+            {
+                this.Close();
+            }
+            if(close== DialogResult.Cancel)
+            {
+
+                this.DialogResult = DialogResult.Cancel;
+            }
         }
 
-        private void colorPaletteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void restartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult res = MessageBox.Show("Are you sure you want to Restart ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-            if (res == DialogResult.OK)
+            DialogResult res = MessageBox.Show("Are you sure you want to Restart ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (res == DialogResult.Yes)
             {
                  
                 saveState(-2.025, -1.125, 0.6, 1.125);
@@ -86,7 +91,7 @@ namespace Fractal
 
                 Application.Restart();
             }
-            if (res == DialogResult.Cancel)
+            if (res == DialogResult.No)
             {
                 this.DialogResult = DialogResult.Cancel; 
             }
@@ -210,6 +215,7 @@ namespace Fractal
         private void stopToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             timer1.Stop();
+            stop();
         }
 
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -226,7 +232,7 @@ namespace Fractal
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string aboutprogram = "Author :Uttam Bhandari\nMandelbrot C#";
+            string aboutprogram = "Author :Uttam Bhandari\nMandelbrot C#\nEmail:uttambhandari75@gmail.com\nContact Number: +9779841254148";
             MessageBox.Show(aboutprogram);
         }
 
@@ -235,15 +241,15 @@ namespace Fractal
 
         }
 
-        public void stop()
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
-        private void RandomColor()
+
+        public void stop()
         {
-            mandelbrot();
-            update();
         }
+        
 
 
 
@@ -312,7 +318,8 @@ namespace Fractal
                     g1.DrawLine(pen, x, y, x + 1, y);
                 }
             //showStatus("Mandelbrot-Set ready - please select zoom area with pressed mouse.");
-
+            textBox1.Text = "Mandelbrot-Set ready - please select zoom area with pressed mouse.";
+            textBox1.Enabled = false;
             action = true;
         }
               private float pointcolour(double xwert, double ywert)
@@ -447,11 +454,7 @@ namespace Fractal
             }
         }
     
-        public String getAppletInfo()
-        {
-            return "fractal.class - Mandelbrot Set a Java Applet by Eckhard Roessel 2000-2001";
-        }
-
+       
 
         private List<string> readState()
         {

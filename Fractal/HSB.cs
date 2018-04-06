@@ -6,7 +6,6 @@ namespace Fractal
     class HSB
     {
         public float rChan, gChan, bChan;
-        public int r, g, a;
 
         //private int mandelColor;
         //private int unit;
@@ -84,7 +83,7 @@ namespace Fractal
                 gChan = (float)Math.Round(Math.Min(Math.Max(green, 0), 255));
                 bChan = (float)Math.Round(Math.Min(Math.Max(blue, 0), 255));
 
-            if (change == 1)
+            if (change == 1)//change the color of mandelbrot
             {
                 rChan = 50;
                 bChan = 200;
@@ -92,7 +91,7 @@ namespace Fractal
 
             else if (change == 2)
             {
-                rChan = 10;
+                rChan = 233;
             }
 
 

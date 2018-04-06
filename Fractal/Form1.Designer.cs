@@ -47,9 +47,10 @@ namespace Fractal
             this.stopToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -63,8 +64,8 @@ namespace Fractal
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.optionToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.helpToolStripMenuItem,
+            this.optionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(869, 24);
@@ -138,7 +139,7 @@ namespace Fractal
             // colorPaletteToolStripMenuItem
             // 
             this.colorPaletteToolStripMenuItem.Name = "colorPaletteToolStripMenuItem";
-            this.colorPaletteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.colorPaletteToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.colorPaletteToolStripMenuItem.Text = "Color Palette";
             this.colorPaletteToolStripMenuItem.Click += new System.EventHandler(this.colorPaletteToolStripMenuItem_Click_1);
             // 
@@ -148,7 +149,7 @@ namespace Fractal
             this.cycleToolStripMenuItem,
             this.stopToolStripMenuItem1});
             this.colorCyclingToolStripMenuItem.Name = "colorCyclingToolStripMenuItem";
-            this.colorCyclingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.colorCyclingToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.colorCyclingToolStripMenuItem.Text = "Color Cycling";
             // 
             // cycleToolStripMenuItem
@@ -178,15 +179,22 @@ namespace Fractal
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.infoToolStripMenuItem.Text = "Info";
             this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(0, 27);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(869, 407);
+            this.pictureBox1.Size = new System.Drawing.Size(869, 379);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -199,18 +207,20 @@ namespace Fractal
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // aboutToolStripMenuItem
+            // textBox1
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.textBox1.Location = new System.Drawing.Point(0, 403);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(869, 20);
+            this.textBox1.TabIndex = 3;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 435);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -248,6 +258,7 @@ namespace Fractal
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
