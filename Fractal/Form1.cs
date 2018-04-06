@@ -30,7 +30,6 @@ namespace Fractal
         private HSB HSBcol = new HSB();
         private Pen pen;  
         private bool boxclicked, RunFirst;
-        private int value, r, g, a;
 
 
         public Form1()
@@ -79,6 +78,12 @@ namespace Fractal
             {
                  
                 saveState(-2.025, -1.125, 0.6, 1.125);
+
+                using (StreamWriter sw = File.CreateText("colState.txt"))
+                {
+                    sw.WriteLine(0);
+                }
+
                 Application.Restart();
             }
             if (res == DialogResult.Cancel)
@@ -136,10 +141,15 @@ namespace Fractal
 
         private void colorPaletteToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            RandomColor();
-            value = 1;
-            mandelbrot();
+            int num = new Random().Next(1, 8);
+            mandelbrot(num);
             update();
+
+            using (StreamWriter sw = File.CreateText("colState.txt"))
+            {
+                sw.WriteLine(num);
+            }
+
         }
 
         public void start()
@@ -149,7 +159,18 @@ namespace Fractal
             initvalues();
             xzoom = (xende - xstart) / (double)x1;
             yzoom = (yende - ystart) / (double)y1;
-            mandelbrot();
+
+            int a = 0;
+            using (StreamReader sr = File.OpenText("colState.txt"))
+            {
+                int num = 0;
+                while ((num = Convert.ToInt32(sr.ReadLine())) != 0)
+                {
+                    a = num;
+                }
+            }
+
+            mandelbrot(a);
         }
 
         private void Form1_Click(object sender, EventArgs e)
@@ -162,16 +183,66 @@ namespace Fractal
             
         }
 
+        private int num = 1;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            num++;
+
+            if (num >= 8)
+            {
+                num = 1;
+            } else
+            {
+                using (StreamWriter sw = File.CreateText("colState.txt"))
+                {
+                    sw.WriteLine(num);
+                }
+                mandelbrot(num);
+                update();
+            }
+        }
+
+        private void cycleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
+        private void stopToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+        }
+
+        private void infoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "-Mandelbrot Program\n-Drag the particular area with the cursor to zoom in.\n-One click to zoom out./n-Change the color from Option.\n-From ColorCycle the color changes automatically.\n-Save the image you zoom in.";
+            MessageBox.Show(message);
+            
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string aboutprogram = "Author :Uttam Bhandari\nMandelbrot C#";
+            MessageBox.Show(aboutprogram);
+        }
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         public void stop()
         {
 
         }
         private void RandomColor()
         {
-            Random random = new Random();
-            r = random.Next(255);
-            g = random.Next(255);
-            a = random.Next(255);
+            mandelbrot();
+            update();
         }
 
 
@@ -209,7 +280,7 @@ namespace Fractal
             update();
         }
       
-        private void mandelbrot()
+        private void mandelbrot(int change=0) //calculate mandelbrot points
         {
             int x, y;
             float h, b, alt = 0.0f;
@@ -227,10 +298,13 @@ namespace Fractal
                        
                         b = 1.0f - h * h; // brightnes
                                           //djm added
-                         HSBcol.fromHSB(h * 255, 0.8f * 255, b * 255,value,r,g,a);
+                         HSBcol.fromHSB(h * 255, 0.8f * 255, b * 255, change);
 
                         Color col = Color.FromArgb((int)HSBcol.rChan, (int)HSBcol.gChan, (int)HSBcol.bChan);//g1.setColor(col);
+                        
                         pen = new Pen(col);
+
+
                         //djmg1.setColor(col);
 
                         alt = h;
@@ -275,7 +349,6 @@ namespace Fractal
                 xende = Convert.ToDouble(readState()[2]);
                 yende = Convert.ToDouble(readState()[3]);
                 RunFirst = false;
-                value = 1;
                 
             }
             else {
@@ -352,7 +425,18 @@ namespace Fractal
                 }
                 xzoom = (xende - xstart) / (double)x1;
                 yzoom = (yende - ystart) / (double)y1;
-                mandelbrot();
+
+                int a = 0;
+                using (StreamReader sr = File.OpenText("colState.txt"))
+                {
+                    int num = 0;
+                    while ((num = Convert.ToInt32(sr.ReadLine())) != 0)
+                    {
+                        a = num;
+                    }
+                }
+
+                mandelbrot(a);
 
                 rectangle = false;
                 boxclicked = false;

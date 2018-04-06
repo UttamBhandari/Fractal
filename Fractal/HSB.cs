@@ -16,11 +16,8 @@ namespace Fractal
         {
             rChan = gChan = bChan = 0;
         }
-        public void fromHSB(float h, float s, float b, int c ,int r,int g, int a)
+        public void fromHSB(float h, float s, float b, int change = 0)
         {
-            this.r = r;
-            this.g = g;
-            this.a = a;
             float red = b;
             float green = b;
             float blue = b;
@@ -36,8 +33,9 @@ namespace Fractal
                     green = h2 * dif / 60 + min;
                     blue = min;
                 }
-                else if(h2 < 120){
-                    red = (h2 - 120) * dif / 60  * -1+ min;
+                else if (h2 < 120)
+                {
+                    red = (h2 - 120) * dif / 60 * -1 + min;
                     green = max;
                     blue = min;
                 }
@@ -82,18 +80,59 @@ namespace Fractal
                 }
             }
             
-            
                 rChan = (float)Math.Round(Math.Min(Math.Max(red, 0f), 255));
                 gChan = (float)Math.Round(Math.Min(Math.Max(green, 0), 255));
                 bChan = (float)Math.Round(Math.Min(Math.Max(blue, 0), 255));
-            
-          
+
+            if (change == 1)
+            {
+                rChan = 50;
+                bChan = 200;
+            }
+
+            else if (change == 2)
+            {
+                rChan = 10;
+            }
+
+
+            else if (change == 3)
+            {
+                bChan = 200;
+            }
+
+
+            else if (change == 4)
+            {
+                bChan = 100;
+            }
+
+            else if (change == 5)
+            {
+                rChan = 150;
+            }
+
+            else if (change == 6)
+            {
+                rChan = 10;
+                bChan = 150;
+            }
+
+            else if (change == 7)
+            {
+                rChan = 255;
+            }
+
+            else if (change == 8)
+            {
+                bChan = 200;
+            }
+
         }
-        /*int r = 255;
-        int g = 0;
-        int b = 0;
 
-
+    }
+}
+        /*
         private void nextRGB()
         {
             if (((r == 255)
@@ -160,4 +199,4 @@ namespace Fractal
         
     **/
        
-    }
+    
